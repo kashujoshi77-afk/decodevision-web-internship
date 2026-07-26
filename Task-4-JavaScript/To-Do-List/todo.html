@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <button id="themeToggle">🌙 Dark Mode</button>
+
+    <h1>My To-Do List</h1>
+    <button id="allTasks">All</button>
+    <button id="pendingTasks">Pending</button>
+    <button id="completedTasks">Completed</button>
+    <input type="text" id="searchTask" placeholder="🔍 Search your task...">
+    <p id="taskCounter">
+📋 Total: 0 | ✅ Completed: 0 | ⏳ Pending: 0
+</p>
+
+    <input type="text" id="taskInput" placeholder="Enter a task">
+
+    <select id="priority">
+    
+    <option value="Low">Low Priority</option>
+    <option value="Medium">Medium Priority</option>
+    <option value="High">High Priority</option>
+</select>
+<input type="date" id="dueDate">
+
+<input type="datetime-local" id="reminderTime">
+
+    <button id="addTask">Add Task</button>
+
+    <ul id="taskList"></ul>
+
+    <script>
+    let taskInput = document.getElementById("taskInput");
+    let addTask = document.getElementById("addTask");
+    let taskList = document.getElementById("taskList");
+
+    addTask.addEventListener("click", function() {
+
+        let taskText = taskInput.value.trim();
+        let priority = document.getElementById("priority").value;
+        let dueDate = document.getElementById("dueDate").value;
+        let reminderTime = document.getElementById("reminderTime").value;
+
+        if (reminderTime === "") {
+    alert("Please select a reminder time!");
+    return;
+}
+
+if (new Date(reminderTime) <= new Date()) {
+    alert("Reminder time must be in the future!");
+    return;
+}
+
+        let reminderDate = new Date(reminderTime);
+
+    let formattedReminder = reminderDate.toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+    });
+
+        if (taskText === "") {
+            alert("Please enter a task!");
+            return;
+        }
+
+        let li = document.createElement("li");
+
+       li.innerHTML = `
+          <span class="taskText">${taskText}</span>
+         <strong class="priorityText">Priority: ${priority}</strong>
+         <span class="dueDateText">Due: ${dueDate}</span>
+         <span class="reminderText" data-raw="${reminderTime}">⏰ Reminder: ${formattedReminder}</span>
+
+         <button onclick="completeTask(this)">Complete</button>
+         <button onclick="editTask(this)">Edit</button>
+         <button onclick="deleteTask(this)">Delete</button>
+    `;
+    
+
+        taskList.appendChild(li);
+        saveTasks();
+        updateTaskCounter();
+
+        taskInput.value = "";
+    });
+
+    function completeTask(button) {
+        let li = button.parentElement;
+    let taskText = li.querySelector(".taskText");
+
+    taskText.style.textDecoration = "line-through";
+    taskText.style.opacity = "0.6";
+
+    button.innerText = "Completed ✓";
+    button.disabled = true;
+
+        saveTasks();
+        updateTaskCounter();
+    }
+    function saveTasks() {
+        localStorage.setItem("tasks", taskList.innerHTML);
+    }
+    function loadTasks() {
+    let savedTasks = localStorage.getItem("tasks");
+
+    if (savedTasks) {
+        taskList.innerHTML = savedTasks;
+    }
+}
+
+    loadTasks();
+    let searchTask = document.getElementById("searchTask");
+
+    function updateTaskCounter() {
+
+    let tasks = document.querySelectorAll("#taskList li");
+
+    let total = tasks.length;
+    let completed = 0;
+
+    tasks.forEach(function(task) {
+
+        let completeButton = task.querySelector("button");
+
+        if (completeButton && completeButton.disabled) {
+            completed++;
+        }
+
+    });
+
+    let pending = total - completed;
+
+    document.getElementById("taskCounter").innerText =
+        "📋 Total: " + total +
+        " | ✅ Completed: " + completed +
+        " | ⏳ Pending: " + pending;
+}
+
+updateTaskCounter();
+
+searchTask.addEventListener("input", function() {
+
+    let searchText = searchTask.value.toLowerCase();
+
+    document.querySelectorAll("#taskList li").forEach(function(task) {
+
+        let taskName = task.querySelector(".taskText").innerText.toLowerCase();
+
+        if (taskName.includes(searchText)) {
+            task.style.display = "";
+        } else {
+            task.style.display = "none";
+        }
+
+    });
+
+});
+    
+   function editTask(button) {
+    let li = button.parentElement;
+
+    let taskSpan = li.querySelector(".taskText");
+    let prioritySpan = li.querySelector(".priorityText");
+    let dueDateSpan = li.querySelector(".dueDateText");
+    let reminderSpan = li.querySelector(".reminderText");
+
+    // Edit Task
+    let newTask = prompt("Edit Task:", taskSpan.innerText);
+
+    if (newTask !== null && newTask.trim() !== "") {
+        taskSpan.innerText = newTask.trim();
+    }
+
+    // Edit Priority
+    let newPriority = prompt("Edit Priority (Low / Medium / High):", prioritySpan.innerText);
+
+    if (newPriority !== null && newPriority.trim() !== "") {
+        prioritySpan.innerText = newPriority.trim();
+    }
+
+    // Edit Due Date
+    let newDueDate = prompt("Edit Due Date (YYYY-MM-DD):", dueDateSpan.innerText.replace("Due: ", ""));
+
+    if (newDueDate !== null && newDueDate.trim() !== "") {
+        dueDateSpan.innerText = "Due: " + newDueDate.trim();
+    }
+
+    // Edit Reminder
+    let newReminder = prompt(
+        "Edit Reminder (Example: 2026-07-25T18:30):",
+        reminderSpan.dataset.raw || ""
+    );
+    // Year must be exactly 4 digits
+    let yearMatch = newReminder.match(/^(\d{4})-/);
+
+    if (!yearMatch) {
+    alert("Please enter a valid 4-digit year!");
+    return;
+    }
+
+   if (newReminder !== null && newReminder.trim() !== "") {
+
+    newReminder = newReminder.trim();
+
+    // Check exact format: YYYY-MM-DDTHH:MM
+    let format = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+    if (!format.test(newReminder)) {
+        alert("Invalid format! Use exactly: YYYY-MM-DDTHH:MM");
+        return;
+    }
+
+    let reminderDate = new Date(newReminder);
+
+    if (isNaN(reminderDate.getTime()) || reminderDate <= new Date()) {
+        alert("Please enter a valid future date and time!");
+        return;
+    }
+
+    let formattedReminder = reminderDate.toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+    });
+
+    reminderSpan.innerText = "⏰ Reminder: " + formattedReminder;
+    reminderSpan.dataset.raw = newReminder;
+}
+}
+
+setInterval(function() {
+    let now = new Date();
+
+    document.querySelectorAll(".reminderText").forEach(function(reminder) {
+
+        let reminderTime = reminder.dataset.raw;
+
+        if (reminderTime && !reminder.dataset.notified) {
+
+            let reminderDate = new Date(reminderTime);
+
+            if (!isNaN(reminderDate.getTime()) && now >= reminderDate) {
+
+                alert("⏰ Reminder: Your task is due now!");
+
+                reminder.dataset.notified = "true";
+            }
+        }
+    });
+    
+
+}, 1000);
+
+function deleteTask(button) {
+    button.parentElement.remove();
+    saveTasks();
+     updateTaskCounter();
+}
+
+let themeToggle = document.getElementById("themeToggle");
+
+function applyTheme(theme) {
+
+    if (theme === "dark") {
+
+        document.body.style.backgroundColor = "#222";
+        document.body.style.color = "white";
+
+        themeToggle.innerText = "☀️ Light Mode";
+
+    } else {
+
+        document.body.style.backgroundColor = "#f4f4f4";
+        document.body.style.color = "black";
+
+        themeToggle.innerText = "🌙 Dark Mode";
+    }
+}
+
+themeToggle.addEventListener("click", function() {
+
+    let currentTheme = localStorage.getItem("theme");
+
+    if (currentTheme === "dark") {
+        localStorage.setItem("theme", "light");
+        applyTheme("light");
+    } else {
+        localStorage.setItem("theme", "dark");
+        applyTheme("dark");
+    }
+
+});
+
+let savedTheme = localStorage.getItem("theme") || "light";
+
+applyTheme(savedTheme);
+
+let allTasksBtn = document.getElementById("allTasks");
+let pendingTasksBtn = document.getElementById("pendingTasks");
+let completedTasksBtn = document.getElementById("completedTasks");
+
+function showAllTasks() {
+    document.querySelectorAll("#taskList li").forEach(function(task) {
+        task.style.display = "block";
+    });
+}
+
+function showPendingTasks() {
+    document.querySelectorAll("#taskList li").forEach(function(task) {
+        let completeButton = task.querySelector("button");
+
+        if (completeButton && completeButton.disabled) {
+            task.style.display = "none";
+        } else {
+            task.style.display = "block";
+        }
+    });
+}
+
+function showCompletedTasks() {
+    document.querySelectorAll("#taskList li").forEach(function(task) {
+        let completeButton = task.querySelector("button");
+
+        if (completeButton && completeButton.disabled) {
+            task.style.display = "block";
+        } else {
+            task.style.display = "none";
+        }
+    });
+}
+
+function removeActiveFilter() {
+    allTasksBtn.classList.remove("filter-active");
+    pendingTasksBtn.classList.remove("filter-active");
+    completedTasksBtn.classList.remove("filter-active");
+}
+
+allTasksBtn.addEventListener("click", function() {
+    removeActiveFilter();
+    allTasksBtn.classList.add("filter-active");
+    showAllTasks();
+});
+
+pendingTasksBtn.addEventListener("click", function() {
+    removeActiveFilter();
+    pendingTasksBtn.classList.add("filter-active");
+    showPendingTasks();
+});
+
+completedTasksBtn.addEventListener("click", function() {
+    removeActiveFilter();
+    completedTasksBtn.classList.add("filter-active");
+    showCompletedTasks();
+});
+
+
+</script>
+
+
+
+</body>
+</html>
