@@ -1,0 +1,53 @@
+#themeToggle {
+    padding: 10px 20px;
+    margin: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+body.dark-mode {
+    background-color: #222;
+    color: white;
+}
+
+body.dark-mode input,
+body.dark-mode select {
+    background-color: #333;
+    color: white;
+    border: 1px solid #777;
+}
+
+body.dark-mode .taskText,
+body.dark-mode .priorityText,
+body.dark-mode .dueDateText,
+body.dark-mode .reminderText {
+    color: white;
+}
+body.dark-mode {
+    background-color: #222 !important;
+    color: white !important;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p,
+body.dark-mode label,
+body.dark-mode span,
+body.dark-mode strong {
+    color: white !important;
+}
+
+body.dark-mode input,
+body.dark-mode select {
+    background-color: #333 !important;
+    color: white !important;
+}
+
+body.dark-mode li {
+    background-color: #333 !important;
+    color: white !important;
+}
+
