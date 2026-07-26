@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> Calculator</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: #e8dfd5;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .calculator {
+            width: 100%;
+            max-width: 360px;
+
+            background: #f7f3ee;
+
+            padding: 30px;
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 15px 35px rgba(80, 65, 50, 0.25);
+        }
+
+        h1 {
+            text-align: center;
+
+            font-family: Georgia, serif;
+            font-size: 32px;
+            font-weight: normal;
+            font-style: italic;
+
+            letter-spacing: 2px;
+
+            color: #5c4b42;
+
+            margin-bottom: 25px;
+        }
+
+        #display {
+            width: 100%;
+
+            height: 70px;
+
+            border: none;
+            border-radius: 15px;
+
+            background: #e8dfd5;
+
+            color: #4b3f38;
+
+            font-family: "Courier New", monospace;
+
+            font-size: 28px;
+
+            text-align: right;
+
+            padding: 10px 15px;
+
+            margin-bottom: 20px;
+
+            outline: none;
+        }
+
+        .buttons {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 12px;
+        }
+
+        button {
+            height: 60px;
+
+            border: none;
+
+            border-radius: 15px;
+
+            background: #e8dfd5;
+
+            color: #5c4b42;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+
+            box-shadow:
+                0 4px 8px rgba(80, 65, 50, 0.12);
+        }
+
+        button:hover {
+            background: #d8cabe;
+
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .operator {
+            background: #cbb8a8;
+
+            color: #3d3029;
+        }
+
+        .operator:hover {
+            background: #b9a392;
+        }
+
+        .clear {
+            background: #b98276;
+
+            color: white;
+        }
+
+        .clear:hover {
+            background: #a66f64;
+        }
+
+        .equals {
+            background: #5c4b42;
+
+            color: white;
+        }
+
+        .equals:hover {
+            background: #3d3029;
+        }
+
+        .backspace {
+            background: #d1b8a5;
+
+            color: #4b3f38;
+        }
+
+        @media (max-width: 400px) {
+
+            .calculator {
+                padding: 20px;
+            }
+
+            button {
+                height: 55px;
+
+                font-size: 18px;
+            }
+
+            #display {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="calculator">
+
+        <h1>Calculator</h1>
+
+        <input
+            type="text"
+            id="display"
+            readonly
+        >
+
+
+        <div class="buttons">
+
+            <button class="clear">C</button>
+
+            <button class="backspace">⌫</button>
+
+            <button class="operator">%</button>
+
+            <button class="operator">/</button>
+
+
+            <button>7</button>
+
+            <button>8</button>
+
+            <button>9</button>
+
+            <button class="operator">*</button>
+
+
+            <button>4</button>
+
+            <button>5</button>
+
+            <button>6</button>
+
+            <button class="operator">-</button>
+
+
+            <button>1</button>
+
+            <button>2</button>
+
+            <button>3</button>
+
+            <button class="operator">+</button>
+
+
+            <button>0</button>
+
+            <button>.</button>
+
+            <button class="equals">=</button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let display = document.getElementById("display");
+
+        let buttons = document.querySelectorAll("button");
+
+
+        buttons.forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                let value = button.innerText;
+
+
+                // Clear
+                if (value === "C") {
+
+                    display.value = "";
+
+                }
+
+
+                // Backspace
+                else if (value === "⌫") {
+
+                    display.value =
+                        display.value.slice(0, -1);
+
+                }
+
+
+                // Percentage
+                else if (value === "%") {
+
+                    if (display.value !== "") {
+
+                        display.value =
+                            Number(display.value) / 100;
+
+                    }
+
+                }
+
+
+                // Equal
+                else if (value === "=") {
+
+                    try {
+
+                        display.value =
+                            eval(display.value);
+
+                    }
+
+                    catch {
+
+                        display.value = "Error";
+
+                    }
+
+                }
+
+
+                // Numbers and operators
+                else {
+
+                    display.value += value;
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>
