@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, serif;
+    background: #e8dfd5;
+    color: #4b3f38;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery {
+    width: 95%;
+    max-width: 1200px;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.gallery h1 {
+    font-family: Georgia, serif;
+    font-size: 42px;
+    font-weight: normal;
+    font-style: italic;
+    letter-spacing: 3px;
+    color: #5c4b42;
+    margin-bottom: 30px;
+}
+
+.main-image-container {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    min-height: 400px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #d8cec4;
+    box-shadow: 0 15px 35px rgba(80, 65, 50, 0.25);
+}
+
+#sliderImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.4s ease;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+
+    width: 55px;
+    height: 55px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(247, 243, 238, 0.85);
+    color: #5c4b42;
+
+    font-size: 24px;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: #5c4b42;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+#prevBtn {
+    left: 25px;
+}
+
+#nextBtn {
+    right: 25px;
+}
+
+.thumbnails {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    width: 110px;
+    height: 70px;
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    opacity: 0.6;
+
+    border: 3px solid transparent;
+
+    transition: all 0.3s ease;
+}
+
+.thumbnail:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+.thumbnail.active {
+    opacity: 1;
+    border-color: #5c4b42;
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+
+    .gallery {
+        width: 95%;
+        padding: 20px 0;
+    }
+
+    .gallery h1 {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    .main-image-container {
+        height: 60vh;
+        min-height: 350px;
+        border-radius: 15px;
+    }
+
+    .nav-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    #prevBtn {
+        left: 10px;
+    }
+
+    #nextBtn {
+        right: 10px;
+    }
+
+    .thumbnails {
+        gap: 8px;
+    }
+
+    .thumbnail {
+        width: 70px;
+        height: 50px;
+    }
+}
