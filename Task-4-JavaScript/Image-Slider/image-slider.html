@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aesthetic Image Gallery</title>
+
+    <link rel="stylesheet" href="slider.css">
+</head>
+
+<body>
+
+    <div class="gallery">
+
+        <h1>Gallery</h1>
+
+        <div class="main-image-container">
+
+            <button id="prevBtn" class="nav-btn">❮</button>
+
+            <img 
+                id="sliderImage"
+                src="https://picsum.photos/id/1015/1200/700"
+                alt="Gallery Image"
+            >
+
+            <button id="nextBtn" class="nav-btn">❯</button>
+
+        </div>
+
+
+        <div class="thumbnails">
+
+            <img
+                src="https://picsum.photos/id/1015/1200/700"
+                class="thumbnail active"
+                data-index="0"
+                alt="Thumbnail 1"
+            >
+
+            <img
+                src="https://picsum.photos/id/1016/1200/700"
+                class="thumbnail"
+                data-index="1"
+                alt="Thumbnail 2"
+            >
+
+            <img
+                src="https://picsum.photos/id/1018/1200/700"
+                class="thumbnail"
+                data-index="2"
+                alt="Thumbnail 3"
+            >
+
+            <img
+                src="https://picsum.photos/id/1025/1200/700"
+                class="thumbnail"
+                data-index="3"
+                alt="Thumbnail 4"
+            >
+
+        </div>
+
+    </div>
+
+
+    <script src="slider.js"></script>
+
+</body>
+
+</html>
