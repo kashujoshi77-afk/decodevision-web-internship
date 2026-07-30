@@ -1,0 +1,323 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+
+    font-family: Arial, sans-serif;
+
+    background: #f7f3ee;
+
+    color: #5c4b42;
+}
+
+
+/* =========================
+   WEATHER APP
+========================= */
+
+.weather-app {
+    width: 100%;
+    max-width: 650px;
+
+    padding: 45px;
+
+    background: #e8dfd5;
+
+    border: 1px solid #d8cabe;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 45px rgba(80, 65, 50, 0.12);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.weather-header {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.eyebrow {
+    color: #a66f64;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 12px;
+}
+
+.weather-header h1 {
+    font-family: Georgia, serif;
+
+    font-size: 48px;
+
+    font-weight: normal;
+
+    font-style: italic;
+
+    color: #5c4b42;
+
+    margin-bottom: 12px;
+}
+
+.weather-header p:last-child {
+    color: #6d625b;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-section {
+    margin-bottom: 25px;
+}
+
+#weatherForm {
+    display: flex;
+
+    gap: 12px;
+}
+
+#cityInput {
+    flex: 1;
+
+    padding: 15px 18px;
+
+    border: 1px solid #cbbcaf;
+
+    border-radius: 12px;
+
+    background: #f7f3ee;
+
+    color: #5c4b42;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+#cityInput:focus {
+    border-color: #8a6357;
+
+    box-shadow:
+        0 0 0 3px rgba(166, 111, 100, 0.12);
+}
+
+#weatherForm button {
+    padding: 15px 25px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #5c4b42;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+#weatherForm button:hover {
+    background: #8a6357;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   WEATHER CARD
+========================= */
+
+.weather-card {
+    padding: 30px;
+
+    background: #f7f3ee;
+
+    border: 1px solid #d8cabe;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 25px rgba(80, 65, 50, 0.08);
+}
+
+.weather-main {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.city-name {
+    font-family: Georgia, serif;
+
+    font-size: 30px;
+
+    color: #5c4b42;
+
+    margin-bottom: 8px;
+}
+
+.weather-description {
+    color: #8a7567;
+
+    text-transform: capitalize;
+}
+
+.temperature {
+    font-size: 45px;
+
+    font-weight: bold;
+
+    color: #a66f64;
+}
+
+
+/* =========================
+   WEATHER DETAILS
+========================= */
+
+.weather-details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.weather-detail {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 18px;
+
+    background: #e8dfd5;
+
+    border-radius: 15px;
+}
+
+.weather-detail > span {
+    font-size: 24px;
+}
+
+.weather-detail small {
+    display: block;
+
+    color: #8a7567;
+
+    font-size: 12px;
+
+    margin-bottom: 5px;
+}
+
+.weather-detail strong {
+    color: #5c4b42;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   MESSAGES
+========================= */
+
+.error-message {
+    color: #a66f64;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.default-message {
+    color: #8a7567;
+
+    text-align: center;
+
+    margin-top: 25px;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .weather-app {
+        padding: 25px 20px;
+    }
+
+    .weather-header h1 {
+        font-size: 38px;
+    }
+
+    #weatherForm {
+        flex-direction: column;
+    }
+
+    #weatherForm button {
+        width: 100%;
+    }
+
+    .weather-main {
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 20px;
+    }
+
+    .weather-details {
+        grid-template-columns: 1fr;
+    }
+
+    .temperature {
+        font-size: 40px;
+    }
+
+}
